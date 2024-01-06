@@ -1,18 +1,14 @@
-import '../models/doctor_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
 // ignore: must_be_immutable
 class DoctorItemWidget extends StatelessWidget {
-  DoctorItemWidget(
-    this.doctorItemModelObj, {
+  DoctorItemWidget({
     Key? key,
     this.onTapDoctor,
   }) : super(
           key: key,
         );
-
-  DoctorItemModel doctorItemModelObj;
 
   VoidCallback? onTapDoctor;
 
@@ -39,7 +35,7 @@ class DoctorItemWidget extends StatelessWidget {
             children: [
               SizedBox(height: 11.v),
               CustomImageView(
-                imagePath: doctorItemModelObj?.drMarcusHorizo,
+                imagePath: ImageConstant.imgEllipse27image,
                 height: 68.adaptSize,
                 width: 68.adaptSize,
                 radius: BorderRadius.circular(
@@ -51,7 +47,7 @@ class DoctorItemWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 1.h),
                 child: Text(
-                  doctorItemModelObj.drMarcusHorizo1!,
+                  "Dr. Marcus Horizo",
                   style: CustomTextStyles.labelLargeOnPrimarySemiBold,
                 ),
               ),
@@ -59,7 +55,7 @@ class DoctorItemWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 1.h),
                 child: Text(
-                  doctorItemModelObj.chardiologist!,
+                  "Chardiologist",
                   style: theme.textTheme.labelMedium,
                 ),
               ),
@@ -83,7 +79,7 @@ class DoctorItemWidget extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(top: 2.v),
                             child: Text(
-                              doctorItemModelObj.ratting!,
+                              "4,7",
                               style: CustomTextStyles.labelSmallCyan300,
                             ),
                           ),
@@ -96,7 +92,7 @@ class DoctorItemWidget extends StatelessWidget {
                         top: 3.v,
                       ),
                       child: Text(
-                        doctorItemModelObj.distance!,
+                        "800m away",
                         style: CustomTextStyles.labelSmallBluegray200,
                       ),
                     ),

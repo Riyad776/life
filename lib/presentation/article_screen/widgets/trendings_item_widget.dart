@@ -1,17 +1,12 @@
-import '../models/trendings_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
 // ignore: must_be_immutable
 class TrendingsItemWidget extends StatelessWidget {
-  TrendingsItemWidget(
-    this.trendingsItemModelObj, {
-    Key? key,
-  }) : super(
+  const TrendingsItemWidget({Key? key})
+      : super(
           key: key,
         );
-
-  TrendingsItemModel trendingsItemModelObj;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +31,7 @@ class TrendingsItemWidget extends StatelessWidget {
               alignment: Alignment.topRight,
               children: [
                 CustomImageView(
-                  imagePath: trendingsItemModelObj?.covidNineteen,
+                  imagePath: ImageConstant.imgRectangle54,
                   height: 87.v,
                   width: 138.h,
                   radius: BorderRadius.circular(
@@ -61,7 +56,7 @@ class TrendingsItemWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 6.h),
             child: Text(
-              trendingsItemModelObj.covidNineteen1!,
+              "Covid-19",
               style: CustomTextStyles.labelMediumCyan300,
             ),
           ),
@@ -70,7 +65,7 @@ class TrendingsItemWidget extends StatelessWidget {
             width: 106.h,
             margin: EdgeInsets.only(left: 1.h),
             child: Text(
-              trendingsItemModelObj.description!,
+              "Comparing the \nAstraZeneca and \nSinovac COVID-19 \nVaccines",
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
               style: CustomTextStyles.labelLargeOnPrimarySemiBold.copyWith(
@@ -85,7 +80,7 @@ class TrendingsItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  trendingsItemModelObj.date!,
+                  "Jun 12, 2021",
                   style: theme.textTheme.labelSmall,
                 ),
                 Container(
@@ -106,7 +101,7 @@ class TrendingsItemWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 4.h),
                   child: Text(
-                    trendingsItemModelObj.time!,
+                    "6 min read",
                     style: CustomTextStyles.labelSmallCyan300,
                   ),
                 ),

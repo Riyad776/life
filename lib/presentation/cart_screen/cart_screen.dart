@@ -1,7 +1,4 @@
 import '../cart_screen/widgets/drugs2_item_widget.dart';
-import 'bloc/cart_bloc.dart';
-import 'models/cart_model.dart';
-import 'models/drugs2_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/appbar_leading_image.dart';
@@ -12,13 +9,6 @@ import 'package:ryadalhdyfy7_s_application1/widgets/custom_elevated_button.dart'
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
-
-  static Widget builder(BuildContext context) {
-    return BlocProvider<CartBloc>(
-        create: (context) => CartBloc(CartState(cartModelObj: CartModel()))
-          ..add(CartInitialEvent()),
-        child: CartScreen());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +42,7 @@ class CartScreen extends StatelessWidget {
               onTapArrowLeft(context);
             }),
         centerTitle: true,
-        title: AppbarSubtitle(text: "lbl_my_cart".tr),
+        title: AppbarSubtitle(text: "My Cart"),
         actions: [
           AppbarTrailingImage(
               imagePath: ImageConstant.imgNotification,
@@ -62,21 +52,15 @@ class CartScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildDrugs(BuildContext context) {
-    return BlocSelector<CartBloc, CartState, CartModel?>(
-        selector: (state) => state.cartModelObj,
-        builder: (context, cartModelObj) {
-          return ListView.separated(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              separatorBuilder: (context, index) {
-                return SizedBox(height: 25.v);
-              },
-              itemCount: cartModelObj?.drugs2ItemList.length ?? 0,
-              itemBuilder: (context, index) {
-                Drugs2ItemModel model =
-                    cartModelObj?.drugs2ItemList[index] ?? Drugs2ItemModel();
-                return Drugs2ItemWidget(model);
-              });
+    return ListView.separated(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        separatorBuilder: (context, index) {
+          return SizedBox(height: 25.v);
+        },
+        itemCount: 2,
+        itemBuilder: (context, index) {
+          return Drugs2ItemWidget();
         });
   }
 
@@ -85,28 +69,24 @@ class CartScreen extends StatelessWidget {
     return Column(children: [
       Align(
           alignment: Alignment.centerLeft,
-          child: Text("lbl_payment_detail".tr,
-              style: theme.textTheme.titleMedium)),
+          child: Text("Payment Detail", style: theme.textTheme.titleMedium)),
       SizedBox(height: 12.v),
-      _buildAdminFee(context,
-          adminFee: "lbl_consultation".tr, price: "lbl_60_00".tr),
+      _buildAdminFee(context, adminFee: "Consultation", price: "60.00"),
       SizedBox(height: 11.v),
-      _buildAdminFee(context,
-          adminFee: "lbl_admin_fee".tr, price: "lbl_01_00".tr),
+      _buildAdminFee(context, adminFee: "Admin Fee", price: "01.00"),
       SizedBox(height: 11.v),
-      _buildAdminFee(context,
-          adminFee: "msg_aditional_discount".tr, price: "lbl".tr),
+      _buildAdminFee(context, adminFee: "Aditional Discount", price: "-"),
       SizedBox(height: 11.v),
-      _buildAdminFee(context, adminFee: "lbl_total".tr, price: "lbl_61_00".tr)
+      _buildAdminFee(context, adminFee: "Total", price: "61.00")
     ]);
   }
 
   /// Section Widget
   Widget _buildPaymentMethod(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text("lbl_payment_method".tr, style: theme.textTheme.titleMedium),
+      Text("Payment Method", style: theme.textTheme.titleMedium),
       SizedBox(height: 10.v),
-      _buildAdminFee(context, adminFee: "lbl_visa".tr, price: "lbl_change".tr)
+      _buildAdminFee(context, adminFee: "VISA", price: "Change")
     ]);
   }
 
@@ -124,17 +104,17 @@ class CartScreen extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("lbl_total".tr,
+                        Text("Total",
                             style: CustomTextStyles.titleSmallGray500),
                         Opacity(
                             opacity: 0.9,
                             child: Padding(
                                 padding: EdgeInsets.only(top: 1.v),
-                                child: Text("lbl_20_98".tr,
+                                child: Text(" 20.98",
                                     style:
                                         CustomTextStyles.titleMediumOnPrimary)))
                       ])),
-              CustomElevatedButton(width: 192.h, text: "lbl_checkout".tr)
+              CustomElevatedButton(width: 192.h, text: "Checkout")
             ]));
   }
 
@@ -154,8 +134,8 @@ class CartScreen extends StatelessWidget {
     ]);
   }
 
-  /// Navigates to the previous screen.
+  /// Navigates back to the previous screen.
   onTapArrowLeft(BuildContext context) {
-    NavigatorService.goBack();
+    Navigator.pop(context);
   }
 }

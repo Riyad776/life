@@ -1,8 +1,5 @@
-import 'bloc/login_bloc.dart';
-import 'models/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
-import 'package:ryadalhdyfy7_s_application1/core/utils/validation_functions.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_elevated_button.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_text_form_field.dart';
 
@@ -10,14 +7,11 @@ import 'package:ryadalhdyfy7_s_application1/widgets/custom_text_form_field.dart'
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<LoginBloc>(
-        create: (context) => LoginBloc(LoginState(loginModelObj: LoginModel()))
-          ..add(LoginInitialEvent()),
-        child: LoginScreen());
-  }
+  TextEditingController passwordController = TextEditingController();
+
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,70 +34,39 @@ class LoginScreen extends StatelessWidget {
                               SizedBox(height: 70.v),
                               _buildPageTitle(context),
                               SizedBox(height: 32.v),
-                              BlocSelector<LoginBloc, LoginState,
-                                      TextEditingController?>(
-                                  selector: (state) => state.emailController,
-                                  builder: (context, emailController) {
-                                    return CustomTextFormField(
-                                        controller: emailController,
-                                        hintText: "lbl_your_email".tr,
-                                        textInputType:
-                                            TextInputType.emailAddress,
-                                        prefix: Container(
-                                            margin: EdgeInsets.fromLTRB(
-                                                16.h, 12.v, 10.h, 12.v),
-                                            child: CustomImageView(
-                                                imagePath:
-                                                    ImageConstant.imgSystemIcon,
-                                                height: 24.adaptSize,
-                                                width: 24.adaptSize)),
-                                        prefixConstraints:
-                                            BoxConstraints(maxHeight: 48.v),
-                                        validator: (value) {
-                                          if (value == null ||
-                                              (!isValidEmail(value,
-                                                  isRequired: true))) {
-                                            return "err_msg_please_enter_valid_email"
-                                                .tr;
-                                          }
-                                          return null;
-                                        });
-                                  }),
+                              CustomTextFormField(
+                                  controller: emailController,
+                                  hintText: "Your Email",
+                                  textInputType: TextInputType.emailAddress,
+                                  prefix: Container(
+                                      margin: EdgeInsets.fromLTRB(
+                                          16.h, 12.v, 10.h, 12.v),
+                                      child: CustomImageView(
+                                          imagePath:
+                                              ImageConstant.imgSystemIcon,
+                                          height: 24.adaptSize,
+                                          width: 24.adaptSize)),
+                                  prefixConstraints:
+                                      BoxConstraints(maxHeight: 48.v)),
                               SizedBox(height: 8.v),
-                              BlocSelector<LoginBloc, LoginState,
-                                      TextEditingController?>(
-                                  selector: (state) => state.passwordController,
-                                  builder: (context, passwordController) {
-                                    return CustomTextFormField(
-                                        controller: passwordController,
-                                        hintText: "lbl_password".tr,
-                                        textInputAction: TextInputAction.done,
-                                        textInputType:
-                                            TextInputType.visiblePassword,
-                                        prefix: Container(
-                                            margin: EdgeInsets.fromLTRB(
-                                                16.h, 12.v, 10.h, 12.v),
-                                            child: CustomImageView(
-                                                imagePath:
-                                                    ImageConstant.imgLocation,
-                                                height: 24.adaptSize,
-                                                width: 24.adaptSize)),
-                                        prefixConstraints:
-                                            BoxConstraints(maxHeight: 48.v),
-                                        validator: (value) {
-                                          if (value == null ||
-                                              (!isValidPassword(value,
-                                                  isRequired: true))) {
-                                            return "err_msg_please_enter_valid_password"
-                                                .tr;
-                                          }
-                                          return null;
-                                        },
-                                        obscureText: true);
-                                  }),
+                              CustomTextFormField(
+                                  controller: passwordController,
+                                  hintText: "Password",
+                                  textInputAction: TextInputAction.done,
+                                  textInputType: TextInputType.visiblePassword,
+                                  prefix: Container(
+                                      margin: EdgeInsets.fromLTRB(
+                                          16.h, 12.v, 10.h, 12.v),
+                                      child: CustomImageView(
+                                          imagePath: ImageConstant.imgLocation,
+                                          height: 24.adaptSize,
+                                          width: 24.adaptSize)),
+                                  prefixConstraints:
+                                      BoxConstraints(maxHeight: 48.v),
+                                  obscureText: true),
                               SizedBox(height: 27.v),
                               CustomElevatedButton(
-                                  text: "lbl_sign_in".tr,
+                                  text: "Sign In",
                                   buttonStyle: CustomButtonStyles.fillPrimary,
                                   buttonTextStyle:
                                       CustomTextStyles.titleSmallTeal300,
@@ -111,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                                     onTapSignIn(context);
                                   }),
                               SizedBox(height: 24.v),
-                              Text("msg_forgot_password".tr,
+                              Text("Forgot Password?",
                                   style:
                                       CustomTextStyles.labelLargePrimaryBold_1),
                               Spacer(),
@@ -122,13 +85,12 @@ class LoginScreen extends StatelessWidget {
                                   child: RichText(
                                       text: TextSpan(children: [
                                         TextSpan(
-                                            text:
-                                                "msg_don_t_have_an_account2".tr,
+                                            text: "Don’t have an account?",
                                             style: CustomTextStyles
                                                 .bodySmallPrimary),
                                         TextSpan(text: " "),
                                         TextSpan(
-                                            text: "lbl_register".tr,
+                                            text: "Register",
                                             style: CustomTextStyles
                                                 .labelLargePrimaryBold)
                                       ]),
@@ -144,25 +106,20 @@ class LoginScreen extends StatelessWidget {
           height: 42.v,
           width: 115.h),
       SizedBox(height: 26.v),
-      Text("msg_welcome_to_hidoc".tr,
+      Text("Welcome to HiDoc",
           style: CustomTextStyles.titleMediumOnPrimaryContainer),
       SizedBox(height: 12.v),
-      Text("msg_sign_in_to_continue".tr,
-          style: CustomTextStyles.labelLargeGray50)
+      Text("Sign in to continue", style: CustomTextStyles.labelLargeGray50)
     ]);
   }
 
   /// Navigates to the signupScreen when the action is triggered.
   onTapSignIn(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.signupScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.signupScreen);
   }
 
   /// Navigates to the signupScreen when the action is triggered.
   onTapTxtDonthaveanaccount(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.signupScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.signupScreen);
   }
 }

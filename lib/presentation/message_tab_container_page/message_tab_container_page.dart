@@ -1,5 +1,3 @@
-import 'bloc/message_tab_container_bloc.dart';
-import 'models/message_tab_container_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/presentation/message_page/message_page.dart';
@@ -16,15 +14,6 @@ class MessageTabContainerPage extends StatefulWidget {
 
   @override
   MessageTabContainerPageState createState() => MessageTabContainerPageState();
-  static Widget builder(BuildContext context) {
-    return BlocProvider<MessageTabContainerBloc>(
-      create: (context) => MessageTabContainerBloc(MessageTabContainerState(
-        messageTabContainerModelObj: MessageTabContainerModel(),
-      ))
-        ..add(MessageTabContainerInitialEvent()),
-      child: MessageTabContainerPage(),
-    );
-  }
 }
 
 class MessageTabContainerPageState extends State<MessageTabContainerPage>
@@ -39,35 +28,31 @@ class MessageTabContainerPageState extends State<MessageTabContainerPage>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MessageTabContainerBloc, MessageTabContainerState>(
-      builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            appBar: _buildAppBar(context),
-            body: Container(
-              width: double.maxFinite,
-              margin: EdgeInsets.only(top: 46.v),
-              child: Column(
-                children: [
-                  _buildTabview(context),
-                  SizedBox(
-                    height: 575.v,
-                    child: TabBarView(
-                      controller: tabviewController,
-                      children: [
-                        MessagePage(),
-                        MessagePage(),
-                        MessagePage(),
-                      ],
-                    ),
-                  ),
-                ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: _buildAppBar(context),
+        body: Container(
+          width: double.maxFinite,
+          margin: EdgeInsets.only(top: 46.v),
+          child: Column(
+            children: [
+              _buildTabview(context),
+              SizedBox(
+                height: 575.v,
+                child: TabBarView(
+                  controller: tabviewController,
+                  children: [
+                    MessagePage(),
+                    MessagePage(),
+                    MessagePage(),
+                  ],
+                ),
               ),
-            ),
-            floatingActionButton: _buildFloatingActionButton(context),
+            ],
           ),
-        );
-      },
+        ),
+        floatingActionButton: _buildFloatingActionButton(context),
+      ),
     );
   }
 
@@ -76,7 +61,7 @@ class MessageTabContainerPageState extends State<MessageTabContainerPage>
     return CustomAppBar(
       height: 50.v,
       title: AppbarTitle(
-        text: "lbl_messages".tr,
+        text: "Messages",
         margin: EdgeInsets.only(left: 16.h),
       ),
       actions: [
@@ -147,17 +132,17 @@ class MessageTabContainerPageState extends State<MessageTabContainerPage>
         tabs: [
           Tab(
             child: Text(
-              "lbl_all".tr,
+              "All",
             ),
           ),
           Tab(
             child: Text(
-              "lbl_group".tr,
+              "Group",
             ),
           ),
           Tab(
             child: Text(
-              "lbl_private".tr,
+              "Private",
             ),
           ),
         ],

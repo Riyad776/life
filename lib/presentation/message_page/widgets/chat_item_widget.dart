@@ -1,18 +1,14 @@
-import '../models/chat_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
 // ignore: must_be_immutable
 class ChatItemWidget extends StatelessWidget {
-  ChatItemWidget(
-    this.chatItemModelObj, {
+  ChatItemWidget({
     Key? key,
     this.onTapChat,
   }) : super(
           key: key,
         );
-
-  ChatItemModel chatItemModelObj;
 
   VoidCallback? onTapChat;
 
@@ -26,7 +22,7 @@ class ChatItemWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomImageView(
-            imagePath: chatItemModelObj?.drMarcusHorizon,
+            imagePath: ImageConstant.imgProfileThumbnail,
             height: 50.adaptSize,
             width: 50.adaptSize,
             radius: BorderRadius.circular(
@@ -49,12 +45,12 @@ class ChatItemWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          chatItemModelObj.drMarcusHorizon1!,
+                          "Dr. Marcus Horizon",
                           style: theme.textTheme.titleMedium,
                         ),
                         SizedBox(height: 4.v),
                         Text(
-                          chatItemModelObj.iDonTHaveAny!,
+                          "I don,t have any fever, but headchace...",
                           style: CustomTextStyles.bodySmallBluegray600,
                         ),
                       ],
@@ -70,7 +66,7 @@ class ChatItemWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          chatItemModelObj.time!,
+                          "10.24",
                           style: CustomTextStyles.bodySmallOnPrimary,
                         ),
                         SizedBox(height: 7.v),

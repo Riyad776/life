@@ -1,20 +1,12 @@
-import '../models/topics_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
 // ignore: must_be_immutable
 class TopicsItemWidget extends StatelessWidget {
-  TopicsItemWidget(
-    this.topicsItemModelObj, {
-    Key? key,
-    this.onSelectedChipView,
-  }) : super(
+  const TopicsItemWidget({Key? key})
+      : super(
           key: key,
         );
-
-  TopicsItemModel topicsItemModelObj;
-
-  Function(bool)? onSelectedChipView;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +18,7 @@ class TopicsItemWidget extends StatelessWidget {
       showCheckmark: false,
       labelPadding: EdgeInsets.zero,
       label: Text(
-        topicsItemModelObj.covidNineteen!,
+        "Covid-19",
         style: TextStyle(
           color: theme.colorScheme.primary,
           fontSize: 14.fSize,
@@ -34,28 +26,16 @@ class TopicsItemWidget extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
-      selected: (topicsItemModelObj.isSelected ?? false),
+      selected: false,
       backgroundColor: appTheme.cyan300,
       selectedColor: appTheme.cyan300,
-      shape: (topicsItemModelObj.isSelected ?? false)
-          ? RoundedRectangleBorder(
-              side: BorderSide(
-                color: theme.colorScheme.primary.withOpacity(0.6),
-                width: 1.h,
-              ),
-              borderRadius: BorderRadius.circular(
-                10.h,
-              ),
-            )
-          : RoundedRectangleBorder(
-              side: BorderSide.none,
-              borderRadius: BorderRadius.circular(
-                10.h,
-              ),
-            ),
-      onSelected: (value) {
-        onSelectedChipView?.call(value);
-      },
+      shape: RoundedRectangleBorder(
+        side: BorderSide.none,
+        borderRadius: BorderRadius.circular(
+          10.h,
+        ),
+      ),
+      onSelected: (value) {},
     );
   }
 }

@@ -1,20 +1,16 @@
-import '../models/schedule_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_elevated_button.dart';
 
 // ignore: must_be_immutable
 class ScheduleItemWidget extends StatelessWidget {
-  ScheduleItemWidget(
-    this.scheduleItemModelObj, {
+  ScheduleItemWidget({
     Key? key,
     this.onTapCancel,
     this.onTapReschedule,
   }) : super(
           key: key,
         );
-
-  ScheduleItemModel scheduleItemModelObj;
 
   VoidCallback? onTapCancel;
 
@@ -46,19 +42,19 @@ class ScheduleItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        scheduleItemModelObj.drMarcusHorizon!,
+                        "Dr. Marcus Horizon",
                         style: CustomTextStyles.titleMedium18,
                       ),
                       SizedBox(height: 4.v),
                       Text(
-                        scheduleItemModelObj.chardiologist!,
+                        "Chardiologist",
                         style: theme.textTheme.labelLarge,
                       ),
                     ],
                   ),
                 ),
                 CustomImageView(
-                  imagePath: scheduleItemModelObj?.drMarcusHorizon1,
+                  imagePath: ImageConstant.imgEllipse27image46x46,
                   height: 46.adaptSize,
                   width: 46.adaptSize,
                   radius: BorderRadius.circular(
@@ -87,7 +83,7 @@ class ScheduleItemWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(left: 5.h),
                           child: Text(
-                            scheduleItemModelObj.date!,
+                            "26/06/2021",
                             style: CustomTextStyles.labelLargeOnPrimary,
                           ),
                         ),
@@ -103,7 +99,7 @@ class ScheduleItemWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(left: 5.h),
                     child: Text(
-                      scheduleItemModelObj.time!,
+                      "10:30 AM",
                       style: CustomTextStyles.labelLargeOnPrimary,
                     ),
                   ),
@@ -125,7 +121,7 @@ class ScheduleItemWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(left: 5.h),
                     child: Text(
-                      scheduleItemModelObj.confirmed!,
+                      "Confirmed",
                       style: CustomTextStyles.labelLargeOnPrimary,
                     ),
                   ),
@@ -139,7 +135,7 @@ class ScheduleItemWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomElevatedButton(
-                  text: "lbl_cancel".tr,
+                  text: "Cancel",
                   margin: EdgeInsets.only(right: 7.h),
                   buttonStyle: CustomButtonStyles.fillGray,
                   buttonTextStyle: CustomTextStyles.titleSmallBold,
@@ -150,7 +146,7 @@ class ScheduleItemWidget extends StatelessWidget {
               ),
               Expanded(
                 child: CustomElevatedButton(
-                  text: "lbl_reschedule".tr,
+                  text: "Reschedule",
                   margin: EdgeInsets.only(left: 7.h),
                   onPressed: () {
                     onTapReschedule!.call();

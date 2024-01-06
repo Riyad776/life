@@ -1,17 +1,12 @@
-import '../models/relatedarticles_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
 // ignore: must_be_immutable
 class RelatedarticlesItemWidget extends StatelessWidget {
-  RelatedarticlesItemWidget(
-    this.relatedarticlesItemModelObj, {
-    Key? key,
-  }) : super(
+  const RelatedarticlesItemWidget({Key? key})
+      : super(
           key: key,
         );
-
-  RelatedarticlesItemModel relatedarticlesItemModelObj;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +19,7 @@ class RelatedarticlesItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomImageView(
-            imagePath: relatedarticlesItemModelObj?.image,
+            imagePath: ImageConstant.imgThumbnail,
             height: 59.adaptSize,
             width: 59.adaptSize,
             radius: BorderRadius.circular(
@@ -43,7 +38,7 @@ class RelatedarticlesItemWidget extends StatelessWidget {
                 SizedBox(
                   width: 189.h,
                   child: Text(
-                    relatedarticlesItemModelObj.theHealthiest!,
+                    "The 25 Healthiest Fruits You Can Eat, According to a Nutritionist",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style:
@@ -57,7 +52,7 @@ class RelatedarticlesItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      relatedarticlesItemModelObj.date!,
+                      "Jun 10, 2021 ",
                       style: theme.textTheme.labelSmall,
                     ),
                     Container(
@@ -78,7 +73,7 @@ class RelatedarticlesItemWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 4.h),
                       child: Text(
-                        relatedarticlesItemModelObj.time!,
+                        "5min read",
                         style: CustomTextStyles.labelSmallCyan300,
                       ),
                     ),

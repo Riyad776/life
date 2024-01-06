@@ -1,7 +1,4 @@
 import '../message_page/widgets/chat_item_widget.dart';
-import 'bloc/message_bloc.dart';
-import 'models/chat_item_model.dart';
-import 'models/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
@@ -10,14 +7,6 @@ class MessagePage extends StatefulWidget {
 
   @override
   MessagePageState createState() => MessagePageState();
-
-  static Widget builder(BuildContext context) {
-    return BlocProvider<MessageBloc>(
-        create: (context) =>
-            MessageBloc(MessageState(messageModelObj: MessageModel()))
-              ..add(MessageInitialEvent()),
-        child: MessagePage());
-  }
 }
 
 class MessagePageState extends State<MessagePage>
@@ -40,30 +29,22 @@ class MessagePageState extends State<MessagePage>
   Widget _buildChat(BuildContext context) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.h),
-        child: BlocSelector<MessageBloc, MessageState, MessageModel?>(
-            selector: (state) => state.messageModelObj,
-            builder: (context, messageModelObj) {
-              return ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 24.v);
-                  },
-                  itemCount: messageModelObj?.chatItemList.length ?? 0,
-                  itemBuilder: (context, index) {
-                    ChatItemModel model =
-                        messageModelObj?.chatItemList[index] ?? ChatItemModel();
-                    return ChatItemWidget(model, onTapChat: () {
-                      onTapChat(context);
-                    });
-                  });
+        child: ListView.separated(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            separatorBuilder: (context, index) {
+              return SizedBox(height: 24.v);
+            },
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return ChatItemWidget(onTapChat: () {
+                onTapChat(context);
+              });
             }));
   }
 
   /// Navigates to the chatScreen when the action is triggered.
   onTapChat(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.chatScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.chatScreen);
   }
 }

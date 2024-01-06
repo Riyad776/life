@@ -1,17 +1,12 @@
-import '../models/settings_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
 // ignore: must_be_immutable
 class SettingsItemWidget extends StatelessWidget {
-  SettingsItemWidget(
-    this.settingsItemModelObj, {
-    Key? key,
-  }) : super(
+  const SettingsItemWidget({Key? key})
+      : super(
           key: key,
         );
-
-  SettingsItemModel settingsItemModelObj;
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +15,18 @@ class SettingsItemWidget extends StatelessWidget {
       child: Column(
         children: [
           CustomImageView(
-            imagePath: settingsItemModelObj?.heartrate,
+            imagePath: ImageConstant.imgTelevision,
             height: 32.adaptSize,
             width: 32.adaptSize,
           ),
           SizedBox(height: 5.v),
           Text(
-            settingsItemModelObj.heartRate!,
+            "Heart rate",
             style: CustomTextStyles.labelMediumCyan100,
           ),
           SizedBox(height: 4.v),
           Text(
-            settingsItemModelObj.heartRateCount!,
+            "215bpm",
             style: CustomTextStyles.titleMediumPrimary_1,
           ),
         ],

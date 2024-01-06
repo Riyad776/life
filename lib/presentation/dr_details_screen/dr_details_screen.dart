@@ -1,7 +1,4 @@
 import '../dr_details_screen/widgets/timeslots_item_widget.dart';
-import 'bloc/dr_details_bloc.dart';
-import 'models/dr_details_model.dart';
-import 'models/timeslots_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
@@ -13,16 +10,19 @@ import 'package:ryadalhdyfy7_s_application1/widgets/custom_elevated_button.dart'
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_icon_button.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+// ignore_for_file: must_be_immutable
 class DrDetailsScreen extends StatelessWidget {
-  const DrDetailsScreen({Key? key}) : super(key: key);
+  DrDetailsScreen({Key? key}) : super(key: key);
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<DrDetailsBloc>(
-        create: (context) =>
-            DrDetailsBloc(DrDetailsState(drDetailsModelObj: DrDetailsModel()))
-              ..add(DrDetailsInitialEvent()),
-        child: DrDetailsScreen());
-  }
+  DateTime? rangeStart;
+
+  DateTime? rangeEnd;
+
+  DateTime? selectedDay;
+
+  DateTime focusedDay = DateTime.now();
+
+  RangeSelectionMode rangeSelectionMode = RangeSelectionMode.toggledOn;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class DrDetailsScreen extends StatelessWidget {
               onTapArrowLeft(context);
             }),
         centerTitle: true,
-        title: AppbarSubtitle(text: "lbl_doctor_details".tr),
+        title: AppbarSubtitle(text: "Doctor Details"),
         actions: [
           AppbarTrailingImage(
               imagePath: ImageConstant.imgNotification,
@@ -84,11 +84,10 @@ class DrDetailsScreen extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("msg_dr_marcus_horizon".tr,
+                    Text("Dr. Marcus Horizon",
                         style: CustomTextStyles.titleMedium18),
                     SizedBox(height: 7.v),
-                    Text("lbl_chardiologist".tr,
-                        style: theme.textTheme.labelLarge),
+                    Text("Chardiologist", style: theme.textTheme.labelLarge),
                     SizedBox(height: 13.v),
                     Padding(
                         padding: EdgeInsets.only(left: 3.h),
@@ -100,7 +99,7 @@ class DrDetailsScreen extends StatelessWidget {
                               margin: EdgeInsets.only(bottom: 1.v)),
                           Padding(
                               padding: EdgeInsets.only(left: 4.h),
-                              child: Text("lbl_4_72".tr,
+                              child: Text("4.7",
                                   style: CustomTextStyles.labelLargeCyan300))
                         ])),
                     SizedBox(height: 10.v),
@@ -112,7 +111,7 @@ class DrDetailsScreen extends StatelessWidget {
                           margin: EdgeInsets.only(bottom: 2.v)),
                       Padding(
                           padding: EdgeInsets.only(left: 3.h),
-                          child: Text("lbl_800m_away".tr,
+                          child: Text("800m away",
                               style: theme.textTheme.labelLarge))
                     ])
                   ]))
@@ -127,15 +126,16 @@ class DrDetailsScreen extends StatelessWidget {
             padding: EdgeInsets.only(left: 20.h),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text("lbl_about".tr, style: theme.textTheme.titleMedium),
+              Text("About", style: theme.textTheme.titleMedium),
               SizedBox(height: 7.v),
               SizedBox(
                   width: 313.h,
-                  child: ReadMoreText("msg_lorem_ipsum_dolor".tr,
+                  child: ReadMoreText(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam... ",
                       trimLines: 3,
                       colorClickableText: appTheme.cyan300,
                       trimMode: TrimMode.Line,
-                      trimCollapsedText: "lbl_read_more".tr,
+                      trimCollapsedText: "Read more",
                       moreStyle:
                           theme.textTheme.labelLarge!.copyWith(height: 1.50),
                       lessStyle:
@@ -147,69 +147,40 @@ class DrDetailsScreen extends StatelessWidget {
   Widget _buildDates(BuildContext context) {
     return Align(
         alignment: Alignment.centerRight,
-        child: BlocBuilder<DrDetailsBloc, DrDetailsState>(
-            builder: (context, state) {
-          return SizedBox(
-              height: 64.v,
-              width: 355.h,
-              child: TableCalendar(
-                  locale: 'en_US',
-                  firstDay: DateTime(DateTime.now().year - 5),
-                  lastDay: DateTime(DateTime.now().year + 5),
-                  calendarFormat: CalendarFormat.month,
-                  rangeSelectionMode: state.rangeSelectionMode,
-                  startingDayOfWeek: StartingDayOfWeek.monday,
-                  headerStyle: HeaderStyle(
-                      formatButtonVisible: false, titleCentered: true),
-                  calendarStyle: CalendarStyle(
-                      outsideDaysVisible: false, isTodayHighlighted: true),
-                  daysOfWeekStyle: DaysOfWeekStyle(
-                      weekdayStyle: TextStyle(
-                          color: appTheme.gray500,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500)),
-                  headerVisible: false,
-                  focusedDay: state.focusedDay ?? DateTime.now(),
-                  rangeStartDay: state.rangeStart,
-                  rangeEndDay: state.rangeEnd,
-                  onDaySelected: (selectedDay, focusedDay) {
-                    if (!isSameDay(state.selectedDay, selectedDay)) {
-                      state.focusedDay = focusedDay;
-                      state.selectedDay = selectedDay;
-                      state.rangeSelectionMode = RangeSelectionMode.toggledOn;
-                    }
-                  },
-                  onRangeSelected: (start, end, focusedDay) {
-                    state.focusedDay = focusedDay;
-                    state.rangeEnd = end;
-                    state.rangeStart = start;
-                    state.rangeSelectionMode = RangeSelectionMode.toggledOn;
-                  },
-                  onPageChanged: (focusedDay) {
-                    state.focusedDay = focusedDay;
-                  }));
-        }));
+        child: SizedBox(
+            height: 64.v,
+            width: 355.h,
+            child: TableCalendar(
+                locale: 'en_US',
+                firstDay: DateTime(DateTime.now().year - 5),
+                lastDay: DateTime(DateTime.now().year + 5),
+                calendarFormat: CalendarFormat.month,
+                rangeSelectionMode: rangeSelectionMode,
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                headerStyle: HeaderStyle(
+                    formatButtonVisible: false, titleCentered: true),
+                calendarStyle: CalendarStyle(
+                    outsideDaysVisible: false, isTodayHighlighted: true),
+                daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle: TextStyle(
+                        color: appTheme.gray500,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500)),
+                headerVisible: false,
+                focusedDay: focusedDay,
+                rangeStartDay: rangeStart,
+                rangeEndDay: rangeEnd,
+                onDaySelected: (selectedDay, focusedDay) {},
+                onRangeSelected: (start, end, focusedDay) {},
+                onPageChanged: (focusedDay) {})));
   }
 
   /// Section Widget
   Widget _buildTimeslots(BuildContext context) {
-    return BlocSelector<DrDetailsBloc, DrDetailsState, DrDetailsModel?>(
-        selector: (state) => state.drDetailsModelObj,
-        builder: (context, drDetailsModelObj) {
-          return Wrap(
-              runSpacing: 13.v,
-              spacing: 13.h,
-              children: List<Widget>.generate(
-                  drDetailsModelObj?.timeslotsItemList.length ?? 0, (index) {
-                TimeslotsItemModel model =
-                    drDetailsModelObj?.timeslotsItemList[index] ??
-                        TimeslotsItemModel();
-                return TimeslotsItemWidget(model, onSelectedChipView: (value) {
-                  context.read<DrDetailsBloc>().add(
-                      UpdateChipViewEvent(index: index, isSelected: value));
-                });
-              }));
-        });
+    return Wrap(
+        runSpacing: 13.v,
+        spacing: 13.h,
+        children: List<Widget>.generate(9, (index) => TimeslotsItemWidget()));
   }
 
   /// Section Widget
@@ -228,7 +199,7 @@ class DrDetailsScreen extends StatelessWidget {
               child: CustomImageView(imagePath: ImageConstant.imgUserCyan300)),
           Expanded(
               child: CustomElevatedButton(
-                  text: "msg_book_appointment".tr,
+                  text: "Book Appointment",
                   margin: EdgeInsets.only(left: 19.h),
                   onPressed: () {
                     onTapBookAppointment(context);
@@ -236,22 +207,18 @@ class DrDetailsScreen extends StatelessWidget {
         ]));
   }
 
-  /// Navigates to the previous screen.
+  /// Navigates back to the previous screen.
   onTapArrowLeft(BuildContext context) {
-    NavigatorService.goBack();
+    Navigator.pop(context);
   }
 
   /// Navigates to the chatScreen when the action is triggered.
   onTapBtnUser(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.chatScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.chatScreen);
   }
 
   /// Navigates to the bookAnAppointmentScreen when the action is triggered.
   onTapBookAppointment(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.bookAnAppointmentScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.bookAnAppointmentScreen);
   }
 }

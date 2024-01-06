@@ -1,9 +1,5 @@
 import '../dashboard_page/widgets/doctor_item_widget.dart';
 import '../dashboard_page/widgets/fortyseven_item_widget.dart';
-import 'bloc/dashboard_bloc.dart';
-import 'models/dashboard_model.dart';
-import 'models/doctor_item_model.dart';
-import 'models/fortyseven_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/appbar_title.dart';
@@ -12,16 +8,11 @@ import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/custom_app_bar.dart'
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_elevated_button.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_search_view.dart';
 
+// ignore_for_file: must_be_immutable
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+  DashboardPage({Key? key}) : super(key: key);
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<DashboardBloc>(
-        create: (context) =>
-            DashboardBloc(DashboardState(dashboardModelObj: DashboardModel()))
-              ..add(DashboardInitialEvent()),
-        child: DashboardPage());
-  }
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +31,10 @@ class DashboardPage extends StatelessWidget {
                             children: [
                               Padding(
                                   padding: EdgeInsets.only(right: 20.h),
-                                  child: BlocSelector<
-                                          DashboardBloc,
-                                          DashboardState,
-                                          TextEditingController?>(
-                                      selector: (state) =>
-                                          state.searchController,
-                                      builder: (context, searchController) {
-                                        return CustomSearchView(
-                                            controller: searchController,
-                                            hintText:
-                                                "msg_search_doctor_drugs".tr);
-                                      })),
+                                  child: CustomSearchView(
+                                      controller: searchController,
+                                      hintText:
+                                          "Search doctor, drugs, articles...")),
                               SizedBox(height: 20.v),
                               _buildFortySeven(context),
                               SizedBox(height: 20.v),
@@ -72,7 +55,7 @@ class DashboardPage extends StatelessWidget {
     return CustomAppBar(
         height: 90.v,
         title: AppbarTitle(
-            text: "msg_find_your_desire".tr,
+            text: "Find your desire \nhealt solution",
             margin: EdgeInsets.only(left: 20.h)),
         actions: [
           AppbarTrailingImage(
@@ -85,24 +68,17 @@ class DashboardPage extends StatelessWidget {
   Widget _buildFortySeven(BuildContext context) {
     return SizedBox(
         height: 71.v,
-        child: BlocSelector<DashboardBloc, DashboardState, DashboardModel?>(
-            selector: (state) => state.dashboardModelObj,
-            builder: (context, dashboardModelObj) {
-              return ListView.separated(
-                  padding: EdgeInsets.only(right: 20.h),
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(width: 17.h);
-                  },
-                  itemCount: dashboardModelObj?.fortysevenItemList.length ?? 0,
-                  itemBuilder: (context, index) {
-                    FortysevenItemModel model =
-                        dashboardModelObj?.fortysevenItemList[index] ??
-                            FortysevenItemModel();
-                    return FortysevenItemWidget(model, onTapBtnTicket: () {
-                      onTapBtnTicket(context);
-                    });
-                  });
+        child: ListView.separated(
+            padding: EdgeInsets.only(right: 20.h),
+            scrollDirection: Axis.horizontal,
+            separatorBuilder: (context, index) {
+              return SizedBox(width: 17.h);
+            },
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              return FortysevenItemWidget(onTapBtnTicket: () {
+                onTapBtnTicket(context);
+              });
             }));
   }
 
@@ -122,7 +98,7 @@ class DashboardPage extends StatelessWidget {
               SizedBox(height: 4.v),
               SizedBox(
                   width: 168.h,
-                  child: Text("msg_early_protection".tr,
+                  child: Text("Early protection for\nyour family healt",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: CustomTextStyles.titleMedium18
@@ -131,7 +107,7 @@ class DashboardPage extends StatelessWidget {
               CustomElevatedButton(
                   height: 26.v,
                   width: 106.h,
-                  text: "lbl_learn_more".tr,
+                  text: "Learn More",
                   buttonStyle: CustomButtonStyles.fillCyan,
                   buttonTextStyle: CustomTextStyles.labelLargePrimarySemiBold)
             ]));
@@ -145,14 +121,14 @@ class DashboardPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("lbl_top_doctor".tr, style: theme.textTheme.titleMedium),
+              Text("Top Doctor", style: theme.textTheme.titleMedium),
               GestureDetector(
                   onTap: () {
                     onTapTxtSeeAll(context);
                   },
                   child: Padding(
                       padding: EdgeInsets.only(bottom: 5.v),
-                      child: Text("lbl_see_all".tr,
+                      child: Text("See all",
                           style: CustomTextStyles.labelLargeCyan300)))
             ]));
   }
@@ -161,23 +137,16 @@ class DashboardPage extends StatelessWidget {
   Widget _buildDoctor(BuildContext context) {
     return SizedBox(
         height: 173.v,
-        child: BlocSelector<DashboardBloc, DashboardState, DashboardModel?>(
-            selector: (state) => state.dashboardModelObj,
-            builder: (context, dashboardModelObj) {
-              return ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(width: 14.h);
-                  },
-                  itemCount: dashboardModelObj?.doctorItemList.length ?? 0,
-                  itemBuilder: (context, index) {
-                    DoctorItemModel model =
-                        dashboardModelObj?.doctorItemList[index] ??
-                            DoctorItemModel();
-                    return DoctorItemWidget(model, onTapDoctor: () {
-                      onTapDoctor(context);
-                    });
-                  });
+        child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            separatorBuilder: (context, index) {
+              return SizedBox(width: 14.h);
+            },
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return DoctorItemWidget(onTapDoctor: () {
+                onTapDoctor(context);
+              });
             }));
   }
 
@@ -187,14 +156,14 @@ class DashboardPage extends StatelessWidget {
         padding: EdgeInsets.only(right: 23.h),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text("lbl_healt_article".tr, style: theme.textTheme.titleMedium),
+          Text("Healt article", style: theme.textTheme.titleMedium),
           GestureDetector(
               onTap: () {
                 onTapTxtSeeAll1(context);
               },
               child: Padding(
                   padding: EdgeInsets.only(bottom: 3.v),
-                  child: Text("lbl_see_all".tr,
+                  child: Text("See all",
                       style: CustomTextStyles.labelLargeCyan300)))
         ]));
   }
@@ -222,7 +191,8 @@ class DashboardPage extends StatelessWidget {
                       children: [
                         SizedBox(
                             width: 179.h,
-                            child: Text("msg_the_25_healthiest".tr,
+                            child: Text(
+                                "The 25 Healthiest Fruits You Can Eat, According to a Nutritionist",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: CustomTextStyles.labelMediumOnPrimary
@@ -231,7 +201,7 @@ class DashboardPage extends StatelessWidget {
                         Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("lbl_jun_10_2021".tr,
+                              Text("Jun 10, 2021 ",
                                   style: theme.textTheme.labelSmall),
                               Container(
                                   height: 2.adaptSize,
@@ -244,7 +214,7 @@ class DashboardPage extends StatelessWidget {
                                           BorderRadius.circular(1.h))),
                               Padding(
                                   padding: EdgeInsets.only(left: 5.h),
-                                  child: Text("lbl_5min_read".tr,
+                                  child: Text("5min read",
                                       style: theme.textTheme.labelSmall))
                             ])
                       ]))
@@ -253,23 +223,21 @@ class DashboardPage extends StatelessWidget {
 
   /// Navigates to the drListScreen when the action is triggered.
   onTapTxtSeeAll(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.drListScreen);
+    Navigator.pushNamed(context, AppRoutes.drListScreen);
   }
 
   /// Navigates to the articleScreen when the action is triggered.
   onTapTxtSeeAll1(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.articleScreen);
+    Navigator.pushNamed(context, AppRoutes.articleScreen);
   }
 
   /// Navigates to the drDetailsScreen when the action is triggered.
   onTapDoctor(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.drDetailsScreen);
+    Navigator.pushNamed(context, AppRoutes.drDetailsScreen);
   }
 
   /// Navigates to the drListScreen when the action is triggered.
   onTapBtnTicket(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.drListScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.drListScreen);
   }
 }

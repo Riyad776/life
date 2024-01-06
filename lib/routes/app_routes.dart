@@ -55,23 +55,20 @@ class AppRoutes {
 
   static const String appNavigationScreen = '/app_navigation_screen';
 
-  static const String initialRoute = '/initialRoute';
-
-  static Map<String, WidgetBuilder> get routes => {
-        splashScreen: SplashScreen.builder,
-        loginScreen: LoginScreen.builder,
-        signupScreen: SignupScreen.builder,
-        dashboardContainerScreen: DashboardContainerScreen.builder,
-        drListScreen: DrListScreen.builder,
-        drDetailsScreen: DrDetailsScreen.builder,
-        bookAnAppointmentScreen: BookAnAppointmentScreen.builder,
-        chatScreen: ChatScreen.builder,
-        pharmacyScreen: PharmacyScreen.builder,
-        drugDetailsScreen: DrugDetailsScreen.builder,
-        articleScreen: ArticleScreen.builder,
-        cartScreen: CartScreen.builder,
-        ambulanceScreen: AmbulanceScreen.builder,
-        appNavigationScreen: AppNavigationScreen.builder,
-        initialRoute: SplashScreen.builder
-      };
+  static Map<String, WidgetBuilder> routes = {
+    splashScreen: (context) => SplashScreen(),
+    loginScreen: (context) => LoginScreen(),
+    signupScreen: (context) => SignupScreen(),
+    dashboardContainerScreen: (context) => DashboardContainerScreen(),
+    drListScreen: (context) => DrListScreen(),
+    drDetailsScreen: (context) => DrDetailsScreen(),
+    bookAnAppointmentScreen: (context) => BookAnAppointmentScreen(),
+    chatScreen: (context) => ChatScreen(),
+    pharmacyScreen: (context) => PharmacyScreen(),
+    drugDetailsScreen: (context) => DrugDetailsScreen(),
+    articleScreen: (context) => ArticleScreen(),
+    cartScreen: (context) => CartScreen(),
+    ambulanceScreen: (context) => AmbulanceScreen(),
+    appNavigationScreen: (context) => AppNavigationScreen()
+  };
 }

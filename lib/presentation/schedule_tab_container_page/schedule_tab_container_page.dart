@@ -1,5 +1,3 @@
-import 'bloc/schedule_tab_container_bloc.dart';
-import 'models/schedule_tab_container_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/presentation/schedule_page/schedule_page.dart';
@@ -16,15 +14,6 @@ class ScheduleTabContainerPage extends StatefulWidget {
   @override
   ScheduleTabContainerPageState createState() =>
       ScheduleTabContainerPageState();
-  static Widget builder(BuildContext context) {
-    return BlocProvider<ScheduleTabContainerBloc>(
-      create: (context) => ScheduleTabContainerBloc(ScheduleTabContainerState(
-        scheduleTabContainerModelObj: ScheduleTabContainerModel(),
-      ))
-        ..add(ScheduleTabContainerInitialEvent()),
-      child: ScheduleTabContainerPage(),
-    );
-  }
 }
 
 class ScheduleTabContainerPageState extends State<ScheduleTabContainerPage>
@@ -39,34 +28,30 @@ class ScheduleTabContainerPageState extends State<ScheduleTabContainerPage>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ScheduleTabContainerBloc, ScheduleTabContainerState>(
-      builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            appBar: _buildAppBar(context),
-            body: SizedBox(
-              width: double.maxFinite,
-              child: Column(
-                children: [
-                  SizedBox(height: 20.v),
-                  _buildTabview(context),
-                  SizedBox(
-                    height: 603.v,
-                    child: TabBarView(
-                      controller: tabviewController,
-                      children: [
-                        SchedulePage(),
-                        SchedulePage(),
-                        SchedulePage(),
-                      ],
-                    ),
-                  ),
-                ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: _buildAppBar(context),
+        body: SizedBox(
+          width: double.maxFinite,
+          child: Column(
+            children: [
+              SizedBox(height: 20.v),
+              _buildTabview(context),
+              SizedBox(
+                height: 603.v,
+                child: TabBarView(
+                  controller: tabviewController,
+                  children: [
+                    SchedulePage(),
+                    SchedulePage(),
+                    SchedulePage(),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -75,7 +60,7 @@ class ScheduleTabContainerPageState extends State<ScheduleTabContainerPage>
     return CustomAppBar(
       height: 47.v,
       title: AppbarTitle(
-        text: "lbl_schedule".tr,
+        text: "Schedule",
         margin: EdgeInsets.only(left: 16.h),
       ),
       actions: [
@@ -146,17 +131,17 @@ class ScheduleTabContainerPageState extends State<ScheduleTabContainerPage>
         tabs: [
           Tab(
             child: Text(
-              "lbl_upcoming".tr,
+              "Upcoming",
             ),
           ),
           Tab(
             child: Text(
-              "lbl_completed".tr,
+              "Completed",
             ),
           ),
           Tab(
             child: Text(
-              "lbl_canceled".tr,
+              "Canceled",
             ),
           ),
         ],

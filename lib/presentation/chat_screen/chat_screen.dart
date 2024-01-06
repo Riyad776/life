@@ -1,5 +1,3 @@
-import 'bloc/chat_bloc.dart';
-import 'models/chat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/appbar_leading_image.dart';
@@ -9,15 +7,11 @@ import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/custom_app_bar.dart'
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_elevated_button.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_text_form_field.dart';
 
+// ignore_for_file: must_be_immutable
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  ChatScreen({Key? key}) : super(key: key);
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<ChatBloc>(
-        create: (context) => ChatBloc(ChatState(chatModelObj: ChatModel()))
-          ..add(ChatInitialEvent()),
-        child: ChatScreen());
-  }
+  TextEditingController messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +31,8 @@ class ChatScreen extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.only(left: 1.h),
                       child: _buildDoctorDetails4(context,
-                          drMarcusHorizon: "msg_dr_marcus_horizon".tr,
-                          time: "lbl_5_min_ago".tr)),
+                          drMarcusHorizon: "Dr. Marcus Horizon",
+                          time: "5 min ago")),
                   SizedBox(height: 10.v),
                   Align(
                       alignment: Alignment.centerLeft,
@@ -55,7 +49,8 @@ class ChatScreen extends StatelessWidget {
                                 SizedBox(height: 3.v),
                                 SizedBox(
                                     width: 193.h,
-                                    child: Text("msg_ok_do_you_have".tr,
+                                    child: Text(
+                                        "Ok, Do you have fever? is the\nheadchace severe",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: theme.textTheme.bodyMedium!
@@ -80,7 +75,8 @@ class ChatScreen extends StatelessWidget {
                                 Container(
                                     width: 162.h,
                                     margin: EdgeInsets.only(right: 47.h),
-                                    child: Text("msg_i_don_t_have_any".tr,
+                                    child: Text(
+                                        "I don,t have any fever, \nbut headchace is painful",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: CustomTextStyles
@@ -104,8 +100,7 @@ class ChatScreen extends StatelessWidget {
               onTapArrowLeft(context);
             }),
         title: AppbarSubtitle(
-            text: "msg_dr_marcus_horizon".tr,
-            margin: EdgeInsets.only(left: 16.h)),
+            text: "Dr. Marcus Horizon", margin: EdgeInsets.only(left: 16.h)),
         actions: [
           AppbarTrailingImage(
               imagePath: ImageConstant.imgUserOnprimary,
@@ -121,10 +116,10 @@ class ChatScreen extends StatelessWidget {
         decoration: AppDecoration.outlineGray5001
             .copyWith(borderRadius: BorderRadiusStyle.roundedBorder10),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text("msg_consultion_start".tr,
-              style: CustomTextStyles.titleMediumCyan300),
+          Text("Consultion Start", style: CustomTextStyles.titleMediumCyan300),
           SizedBox(height: 8.v),
-          Text("msg_you_can_consult".tr, style: theme.textTheme.labelLarge)
+          Text("You can consult your problem to the doctor",
+              style: theme.textTheme.labelLarge)
         ]));
   }
 
@@ -134,8 +129,7 @@ class ChatScreen extends StatelessWidget {
         padding: EdgeInsets.only(left: 1.h),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _buildDoctorDetails4(context,
-              drMarcusHorizon: "msg_dr_marcus_horizon".tr,
-              time: "lbl_10_min_ago".tr),
+              drMarcusHorizon: "Dr. Marcus Horizon", time: "10 min ago"),
           SizedBox(height: 10.v),
           Container(
               margin: EdgeInsets.only(right: 129.h),
@@ -147,7 +141,7 @@ class ChatScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: 4.v),
-                    Text("msg_hello_how_can_i".tr,
+                    Text("Hello, How can i help you?",
                         style: theme.textTheme.bodyMedium)
                   ])),
           SizedBox(height: 15.v),
@@ -166,7 +160,8 @@ class ChatScreen extends StatelessWidget {
                         SizedBox(height: 4.v),
                         SizedBox(
                             width: 205.h,
-                            child: Text("msg_i_have_suffering".tr,
+                            child: Text(
+                                "I have suffering from headache \nand cold for 3 days, I took 2 \ntablets of dolo, but still pain",
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: CustomTextStyles.bodyMediumPrimary
@@ -181,8 +176,7 @@ class ChatScreen extends StatelessWidget {
         padding: EdgeInsets.only(left: 1.h),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _buildDoctorDetails4(context,
-              drMarcusHorizon: "msg_dr_marcus_horizon".tr,
-              time: "lbl_online".tr),
+              drMarcusHorizon: "Dr. Marcus Horizon", time: "Online"),
           SizedBox(height: 10.v),
           Container(
               height: 22.v,
@@ -205,25 +199,21 @@ class ChatScreen extends StatelessWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
               padding: EdgeInsets.only(bottom: 1.v),
-              child: BlocSelector<ChatBloc, ChatState, TextEditingController?>(
-                  selector: (state) => state.messageController,
-                  builder: (context, messageController) {
-                    return CustomTextFormField(
-                        width: 206.h,
-                        controller: messageController,
-                        hintText: "msg_type_message".tr,
-                        textInputAction: TextInputAction.done,
-                        prefix: Container(
-                            margin: EdgeInsets.fromLTRB(10.h, 11.v, 11.h, 10.v),
-                            child: CustomImageView(
-                                imagePath: ImageConstant.imgAttach,
-                                height: 28.adaptSize,
-                                width: 28.adaptSize)),
-                        prefixConstraints: BoxConstraints(maxHeight: 49.v));
-                  })),
+              child: CustomTextFormField(
+                  width: 206.h,
+                  controller: messageController,
+                  hintText: "Type message ...",
+                  textInputAction: TextInputAction.done,
+                  prefix: Container(
+                      margin: EdgeInsets.fromLTRB(10.h, 11.v, 11.h, 10.v),
+                      child: CustomImageView(
+                          imagePath: ImageConstant.imgAttach,
+                          height: 28.adaptSize,
+                          width: 28.adaptSize)),
+                  prefixConstraints: BoxConstraints(maxHeight: 49.v))),
           CustomElevatedButton(
               width: 111.h,
-              text: "lbl_send".tr,
+              text: "Send",
               margin: EdgeInsets.only(left: 17.h),
               onPressed: () {
                 onTapSend(context);
@@ -258,15 +248,13 @@ class ChatScreen extends StatelessWidget {
     ]);
   }
 
-  /// Navigates to the previous screen.
+  /// Navigates back to the previous screen.
   onTapArrowLeft(BuildContext context) {
-    NavigatorService.goBack();
+    Navigator.pop(context);
   }
 
   /// Navigates to the signupScreen when the action is triggered.
   onTapSend(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.signupScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.signupScreen);
   }
 }

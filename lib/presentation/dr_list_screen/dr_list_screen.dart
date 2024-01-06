@@ -1,7 +1,4 @@
 import '../dr_list_screen/widgets/drlist_item_widget.dart';
-import 'bloc/dr_list_bloc.dart';
-import 'models/dr_list_model.dart';
-import 'models/drlist_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/appbar_leading_image.dart';
@@ -12,14 +9,6 @@ import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/custom_app_bar.dart'
 class DrListScreen extends StatelessWidget {
   const DrListScreen({Key? key}) : super(key: key);
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<DrListBloc>(
-        create: (context) =>
-            DrListBloc(DrListState(drListModelObj: DrListModel()))
-              ..add(DrListInitialEvent()),
-        child: DrListScreen());
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,22 +16,15 @@ class DrListScreen extends StatelessWidget {
             appBar: _buildAppBar(context),
             body: Padding(
                 padding: EdgeInsets.only(left: 20.h, top: 24.v, right: 20.h),
-                child: BlocSelector<DrListBloc, DrListState, DrListModel?>(
-                    selector: (state) => state.drListModelObj,
-                    builder: (context, drListModelObj) {
-                      return ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) {
-                            return SizedBox(height: 16.v);
-                          },
-                          itemCount: drListModelObj?.drlistItemList.length ?? 0,
-                          itemBuilder: (context, index) {
-                            DrlistItemModel model =
-                                drListModelObj?.drlistItemList[index] ??
-                                    DrlistItemModel();
-                            return DrlistItemWidget(model);
-                          });
+                child: ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: 16.v);
+                    },
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return DrlistItemWidget();
                     }))));
   }
 
@@ -57,7 +39,7 @@ class DrListScreen extends StatelessWidget {
               onTapArrowLeft(context);
             }),
         centerTitle: true,
-        title: AppbarSubtitle(text: "lbl_top_doctor".tr),
+        title: AppbarSubtitle(text: "Top Doctor"),
         actions: [
           AppbarTrailingImage(
               imagePath: ImageConstant.imgNotification,
@@ -65,8 +47,8 @@ class DrListScreen extends StatelessWidget {
         ]);
   }
 
-  /// Navigates to the previous screen.
+  /// Navigates back to the previous screen.
   onTapArrowLeft(BuildContext context) {
-    NavigatorService.goBack();
+    Navigator.pop(context);
   }
 }

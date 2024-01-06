@@ -1,7 +1,4 @@
 import '../settings_page/widgets/settings_item_widget.dart';
-import 'bloc/settings_bloc.dart';
-import 'models/settings_item_model.dart';
-import 'models/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/custom_app_bar.dart';
@@ -13,16 +10,6 @@ class SettingsPage extends StatelessWidget {
       : super(
           key: key,
         );
-
-  static Widget builder(BuildContext context) {
-    return BlocProvider<SettingsBloc>(
-      create: (context) => SettingsBloc(SettingsState(
-        settingsModelObj: SettingsModel(),
-      ))
-        ..add(SettingsInitialEvent()),
-      child: SettingsPage(),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +30,7 @@ class SettingsPage extends StatelessWidget {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "lbl_amelia_renata".tr,
+                        "Amelia Renata",
                         style: CustomTextStyles.titleMediumPrimary,
                       ),
                     ),
@@ -65,7 +52,7 @@ class SettingsPage extends StatelessWidget {
                   children: [
                     _buildSettingOption(
                       context,
-                      appointment: "lbl_my_saved".tr,
+                      appointment: "My Saved",
                     ),
                     SizedBox(height: 13.v),
                     Divider(
@@ -74,7 +61,7 @@ class SettingsPage extends StatelessWidget {
                     SizedBox(height: 13.v),
                     _buildSettingOption(
                       context,
-                      appointment: "lbl_appointment".tr,
+                      appointment: "Appointment",
                     ),
                     SizedBox(height: 13.v),
                     Divider(
@@ -83,7 +70,7 @@ class SettingsPage extends StatelessWidget {
                     SizedBox(height: 13.v),
                     _buildSettingOption(
                       context,
-                      appointment: "lbl_payment_method".tr,
+                      appointment: "Payment Method",
                     ),
                     SizedBox(height: 13.v),
                     Divider(
@@ -92,7 +79,7 @@ class SettingsPage extends StatelessWidget {
                     SizedBox(height: 13.v),
                     _buildSettingOption(
                       context,
-                      appointment: "lbl_faqs".tr,
+                      appointment: "FAQs",
                     ),
                     SizedBox(height: 13.v),
                     Divider(
@@ -101,7 +88,7 @@ class SettingsPage extends StatelessWidget {
                     SizedBox(height: 13.v),
                     _buildSettingOption(
                       context,
-                      appointment: "lbl_help".tr,
+                      appointment: "Help",
                     ),
                     SizedBox(height: 24.v),
                   ],
@@ -216,37 +203,27 @@ class SettingsPage extends StatelessWidget {
           SizedBox(height: 71.v),
           SizedBox(
             height: 75.v,
-            child: BlocSelector<SettingsBloc, SettingsState, SettingsModel?>(
-              selector: (state) => state.settingsModelObj,
-              builder: (context, settingsModelObj) {
-                return ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (
-                    context,
-                    index,
-                  ) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30.5.h),
-                      child: SizedBox(
-                        height: 44.v,
-                        child: VerticalDivider(
-                          width: 1.h,
-                          thickness: 1.v,
-                          color: appTheme.cyan100,
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: settingsModelObj?.settingsItemList.length ?? 0,
-                  itemBuilder: (context, index) {
-                    SettingsItemModel model =
-                        settingsModelObj?.settingsItemList[index] ??
-                            SettingsItemModel();
-                    return SettingsItemWidget(
-                      model,
-                    );
-                  },
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              separatorBuilder: (
+                context,
+                index,
+              ) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.5.h),
+                  child: SizedBox(
+                    height: 44.v,
+                    child: VerticalDivider(
+                      width: 1.h,
+                      thickness: 1.v,
+                      color: appTheme.cyan100,
+                    ),
+                  ),
                 );
+              },
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                return SettingsItemWidget();
               },
             ),
           ),

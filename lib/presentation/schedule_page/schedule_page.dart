@@ -1,7 +1,4 @@
 import '../schedule_page/widgets/schedule_item_widget.dart';
-import 'bloc/schedule_bloc.dart';
-import 'models/schedule_item_model.dart';
-import 'models/schedule_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
@@ -10,14 +7,6 @@ class SchedulePage extends StatefulWidget {
 
   @override
   SchedulePageState createState() => SchedulePageState();
-
-  static Widget builder(BuildContext context) {
-    return BlocProvider<ScheduleBloc>(
-        create: (context) =>
-            ScheduleBloc(ScheduleState(scheduleModelObj: ScheduleModel()))
-              ..add(ScheduleInitialEvent()),
-        child: SchedulePage());
-  }
 }
 
 class SchedulePageState extends State<SchedulePage>
@@ -42,40 +31,29 @@ class SchedulePageState extends State<SchedulePage>
   Widget _buildSchedule(BuildContext context) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.h),
-        child: BlocSelector<ScheduleBloc, ScheduleState, ScheduleModel?>(
-            selector: (state) => state.scheduleModelObj,
-            builder: (context, scheduleModelObj) {
-              return ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 20.v);
-                  },
-                  itemCount: scheduleModelObj?.scheduleItemList.length ?? 0,
-                  itemBuilder: (context, index) {
-                    ScheduleItemModel model =
-                        scheduleModelObj?.scheduleItemList[index] ??
-                            ScheduleItemModel();
-                    return ScheduleItemWidget(model, onTapCancel: () {
-                      onTapCancel(context);
-                    }, onTapReschedule: () {
-                      onTapReschedule(context);
-                    });
-                  });
+        child: ListView.separated(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            separatorBuilder: (context, index) {
+              return SizedBox(height: 20.v);
+            },
+            itemCount: 2,
+            itemBuilder: (context, index) {
+              return ScheduleItemWidget(onTapCancel: () {
+                onTapCancel(context);
+              }, onTapReschedule: () {
+                onTapReschedule(context);
+              });
             }));
   }
 
   /// Navigates to the signupScreen when the action is triggered.
   onTapCancel(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.signupScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.signupScreen);
   }
 
   /// Navigates to the signupScreen when the action is triggered.
   onTapReschedule(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.signupScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.signupScreen);
   }
 }

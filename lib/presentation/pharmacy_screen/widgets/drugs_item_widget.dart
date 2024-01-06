@@ -1,18 +1,13 @@
-import '../models/drugs_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_icon_button.dart';
 
 // ignore: must_be_immutable
 class DrugsItemWidget extends StatelessWidget {
-  DrugsItemWidget(
-    this.drugsItemModelObj, {
-    Key? key,
-  }) : super(
+  const DrugsItemWidget({Key? key})
+      : super(
           key: key,
         );
-
-  DrugsItemModel drugsItemModelObj;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +27,7 @@ class DrugsItemWidget extends StatelessWidget {
         children: [
           SizedBox(height: 16.v),
           CustomImageView(
-            imagePath: drugsItemModelObj?.panadol,
+            imagePath: ImageConstant.imgDrugThumbnail,
             height: 50.adaptSize,
             width: 50.adaptSize,
             radius: BorderRadius.circular(
@@ -44,7 +39,7 @@ class DrugsItemWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 1.h),
             child: Text(
-              drugsItemModelObj.panadol1!,
+              "Panadol",
               style: CustomTextStyles.labelLargeOnPrimaryContainer,
             ),
           ),
@@ -52,7 +47,7 @@ class DrugsItemWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 1.h),
             child: Text(
-              drugsItemModelObj.quantiity!,
+              "20pcs",
               style: theme.textTheme.labelMedium,
             ),
           ),
@@ -64,7 +59,7 @@ class DrugsItemWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 2.v),
                   child: Text(
-                    drugsItemModelObj.price!,
+                    "15.99",
                     style: CustomTextStyles.titleSmallOnPrimaryContainer,
                   ),
                 ),
@@ -75,7 +70,7 @@ class DrugsItemWidget extends StatelessWidget {
                     width: 18.adaptSize,
                     padding: EdgeInsets.all(5.h),
                     child: CustomImageView(
-                      imagePath: drugsItemModelObj?.facebook,
+                      imagePath: ImageConstant.imgFacebookPrimary,
                     ),
                   ),
                 ),

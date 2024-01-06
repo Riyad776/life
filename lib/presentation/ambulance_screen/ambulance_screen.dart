@@ -1,6 +1,4 @@
-import 'bloc/ambulance_bloc.dart';
 import 'dart:async';
-import 'models/ambulance_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
@@ -14,39 +12,27 @@ class AmbulanceScreen extends StatelessWidget {
 
   Completer<GoogleMapController> googleMapController = Completer();
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<AmbulanceBloc>(
-        create: (context) =>
-            AmbulanceBloc(AmbulanceState(ambulanceModelObj: AmbulanceModel()))
-              ..add(AmbulanceInitialEvent()),
-        child: AmbulanceScreen());
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AmbulanceBloc, AmbulanceState>(
-        builder: (context, state) {
-      return SafeArea(
-          child: Scaffold(
-              appBar: _buildAppBar(context),
-              body: Container(
-                  height: 710.v,
-                  width: double.maxFinite,
-                  margin: EdgeInsets.only(top: 13.v, bottom: 1.v),
-                  child: GoogleMap(
-                      mapType: MapType.normal,
-                      initialCameraPosition: CameraPosition(
-                          target:
-                              LatLng(37.43296265331129, -122.08832357078792),
-                          zoom: 14.4746),
-                      onMapCreated: (GoogleMapController controller) {
-                        googleMapController.complete(controller);
-                      },
-                      zoomControlsEnabled: false,
-                      zoomGesturesEnabled: false,
-                      myLocationButtonEnabled: false,
-                      myLocationEnabled: false))));
-    });
+    return SafeArea(
+        child: Scaffold(
+            appBar: _buildAppBar(context),
+            body: Container(
+                height: 710.v,
+                width: double.maxFinite,
+                margin: EdgeInsets.only(top: 13.v, bottom: 1.v),
+                child: GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: CameraPosition(
+                        target: LatLng(37.43296265331129, -122.08832357078792),
+                        zoom: 14.4746),
+                    onMapCreated: (GoogleMapController controller) {
+                      googleMapController.complete(controller);
+                    },
+                    zoomControlsEnabled: false,
+                    zoomGesturesEnabled: false,
+                    myLocationButtonEnabled: false,
+                    myLocationEnabled: false))));
   }
 
   /// Section Widget
@@ -60,11 +46,11 @@ class AmbulanceScreen extends StatelessWidget {
               onTapArrowLeft(context);
             }),
         centerTitle: true,
-        title: AppbarSubtitle(text: "lbl_ambulance".tr));
+        title: AppbarSubtitle(text: "Ambulance"));
   }
 
-  /// Navigates to the previous screen.
+  /// Navigates back to the previous screen.
   onTapArrowLeft(BuildContext context) {
-    NavigatorService.goBack();
+    Navigator.pop(context);
   }
 }

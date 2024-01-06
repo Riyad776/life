@@ -1,5 +1,3 @@
-import 'bloc/app_navigation_bloc.dart';
-import 'models/app_navigation_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
@@ -9,125 +7,111 @@ class AppNavigationScreen extends StatelessWidget {
           key: key,
         );
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<AppNavigationBloc>(
-      create: (context) => AppNavigationBloc(AppNavigationState(
-        appNavigationModelObj: AppNavigationModel(),
-      ))
-        ..add(AppNavigationInitialEvent()),
-      child: AppNavigationScreen(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppNavigationBloc, AppNavigationState>(
-      builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            backgroundColor: Color(0XFFFFFFFF),
-            body: SizedBox(
-              width: double.maxFinite,
-              child: Column(
-                children: [
-                  _buildAppNavigation(context),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color(0XFFFFFFFF),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0XFFFFFFFF),
+        body: SizedBox(
+          width: double.maxFinite,
+          child: Column(
+            children: [
+              _buildAppNavigation(context),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0XFFFFFFFF),
+                    ),
+                    child: Column(
+                      children: [
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Splash Screen",
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.splashScreen),
                         ),
-                        child: Column(
-                          children: [
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Splash Screen".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.splashScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Login".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.loginScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Signup".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.signupScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Dashboard - Container".tr,
-                              onTapScreenTitle: () => onTapScreenTitle(
-                                  AppRoutes.dashboardContainerScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Dr List".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.drListScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Dr Details".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.drDetailsScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Book an appointment".tr,
-                              onTapScreenTitle: () => onTapScreenTitle(
-                                  AppRoutes.bookAnAppointmentScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Chat".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.chatScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Pharmacy".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.pharmacyScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Drug Details".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.drugDetailsScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Article".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.articleScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "Cart".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.cartScreen),
-                            ),
-                            _buildScreenTitle(
-                              context,
-                              screenTitle: "ambulance".tr,
-                              onTapScreenTitle: () =>
-                                  onTapScreenTitle(AppRoutes.ambulanceScreen),
-                            ),
-                          ],
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Login",
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.loginScreen),
                         ),
-                      ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Signup",
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.signupScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Dashboard - Container",
+                          onTapScreenTitle: () => onTapScreenTitle(
+                              context, AppRoutes.dashboardContainerScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Dr List",
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.drListScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Dr Details",
+                          onTapScreenTitle: () => onTapScreenTitle(
+                              context, AppRoutes.drDetailsScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Book an appointment",
+                          onTapScreenTitle: () => onTapScreenTitle(
+                              context, AppRoutes.bookAnAppointmentScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Chat",
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.chatScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Pharmacy",
+                          onTapScreenTitle: () => onTapScreenTitle(
+                              context, AppRoutes.pharmacyScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Drug Details",
+                          onTapScreenTitle: () => onTapScreenTitle(
+                              context, AppRoutes.drugDetailsScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Article",
+                          onTapScreenTitle: () => onTapScreenTitle(
+                              context, AppRoutes.articleScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Cart",
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.cartScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "ambulance",
+                          onTapScreenTitle: () => onTapScreenTitle(
+                              context, AppRoutes.ambulanceScreen),
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -145,7 +129,7 @@ class AppNavigationScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.h),
               child: Text(
-                "App Navigation".tr,
+                "App Navigation",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0XFF000000),
@@ -162,8 +146,7 @@ class AppNavigationScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(left: 20.h),
               child: Text(
-                "Check your app's UI from the below demo screens of your app."
-                    .tr,
+                "Check your app's UI from the below demo screens of your app.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0XFF888888),
@@ -232,7 +215,10 @@ class AppNavigationScreen extends StatelessWidget {
   }
 
   /// Common click event
-  void onTapScreenTitle(String routeName) {
-    NavigatorService.pushNamed(routeName);
+  void onTapScreenTitle(
+    BuildContext context,
+    String routeName,
+  ) {
+    Navigator.pushNamed(context, routeName);
   }
 }

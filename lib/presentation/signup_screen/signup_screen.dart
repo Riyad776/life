@@ -1,8 +1,5 @@
-import 'bloc/signup_bloc.dart';
-import 'models/signup_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
-import 'package:ryadalhdyfy7_s_application1/core/utils/validation_functions.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_elevated_button.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_text_form_field.dart';
 
@@ -10,15 +7,15 @@ import 'package:ryadalhdyfy7_s_application1/widgets/custom_text_form_field.dart'
 class SignupScreen extends StatelessWidget {
   SignupScreen({Key? key}) : super(key: key);
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController fullNameController = TextEditingController();
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<SignupBloc>(
-        create: (context) =>
-            SignupBloc(SignupState(signupModelObj: SignupModel()))
-              ..add(SignupInitialEvent()),
-        child: SignupScreen());
-  }
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
+
+  TextEditingController passwordController1 = TextEditingController();
+
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +55,12 @@ class SignupScreen extends StatelessWidget {
                                   child: RichText(
                                       text: TextSpan(children: [
                                         TextSpan(
-                                            text: "msg_have_an_account2".tr,
+                                            text: "Have an account?",
                                             style: CustomTextStyles
                                                 .bodySmallPrimary),
                                         TextSpan(text: " "),
                                         TextSpan(
-                                            text: "lbl_sign_in".tr,
+                                            text: "Sign In",
                                             style: CustomTextStyles
                                                 .labelLargePrimaryBold)
                                       ]),
@@ -79,130 +76,85 @@ class SignupScreen extends StatelessWidget {
           height: 42.v,
           width: 115.h),
       SizedBox(height: 27.v),
-      Text("msg_let_s_get_started".tr,
+      Text("Let’s Get Started",
           style: CustomTextStyles.titleMediumOnPrimaryContainer),
       SizedBox(height: 10.v),
-      Text("msg_create_an_new_account".tr,
-          style: CustomTextStyles.labelLargeGray50)
+      Text("Create an new account", style: CustomTextStyles.labelLargeGray50)
     ]);
   }
 
   /// Section Widget
   Widget _buildFullName(BuildContext context) {
-    return BlocSelector<SignupBloc, SignupState, TextEditingController?>(
-        selector: (state) => state.fullNameController,
-        builder: (context, fullNameController) {
-          return CustomTextFormField(
-              controller: fullNameController,
-              hintText: "lbl_full_name".tr,
-              prefix: Container(
-                  margin: EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
-                  child: CustomImageView(
-                      imagePath: ImageConstant.imgLock,
-                      height: 24.adaptSize,
-                      width: 24.adaptSize)),
-              prefixConstraints: BoxConstraints(maxHeight: 48.v),
-              validator: (value) {
-                if (!isText(value)) {
-                  return "err_msg_please_enter_valid_text".tr;
-                }
-                return null;
-              });
-        });
+    return CustomTextFormField(
+        controller: fullNameController,
+        hintText: "Full Name",
+        prefix: Container(
+            margin: EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
+            child: CustomImageView(
+                imagePath: ImageConstant.imgLock,
+                height: 24.adaptSize,
+                width: 24.adaptSize)),
+        prefixConstraints: BoxConstraints(maxHeight: 48.v));
   }
 
   /// Section Widget
   Widget _buildEmail(BuildContext context) {
-    return BlocSelector<SignupBloc, SignupState, TextEditingController?>(
-        selector: (state) => state.emailController,
-        builder: (context, emailController) {
-          return CustomTextFormField(
-              controller: emailController,
-              hintText: "lbl_your_email".tr,
-              textInputType: TextInputType.emailAddress,
-              prefix: Container(
-                  margin: EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
-                  child: CustomImageView(
-                      imagePath: ImageConstant.imgSystemIcon,
-                      height: 24.adaptSize,
-                      width: 24.adaptSize)),
-              prefixConstraints: BoxConstraints(maxHeight: 48.v),
-              validator: (value) {
-                if (value == null || (!isValidEmail(value, isRequired: true))) {
-                  return "err_msg_please_enter_valid_email".tr;
-                }
-                return null;
-              });
-        });
+    return CustomTextFormField(
+        controller: emailController,
+        hintText: "Your Email",
+        textInputType: TextInputType.emailAddress,
+        prefix: Container(
+            margin: EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
+            child: CustomImageView(
+                imagePath: ImageConstant.imgSystemIcon,
+                height: 24.adaptSize,
+                width: 24.adaptSize)),
+        prefixConstraints: BoxConstraints(maxHeight: 48.v));
   }
 
   /// Section Widget
   Widget _buildPassword(BuildContext context) {
-    return BlocSelector<SignupBloc, SignupState, TextEditingController?>(
-        selector: (state) => state.passwordController,
-        builder: (context, passwordController) {
-          return CustomTextFormField(
-              controller: passwordController,
-              hintText: "lbl_password".tr,
-              textInputType: TextInputType.visiblePassword,
-              prefix: Container(
-                  margin: EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
-                  child: CustomImageView(
-                      imagePath: ImageConstant.imgLocation,
-                      height: 24.adaptSize,
-                      width: 24.adaptSize)),
-              prefixConstraints: BoxConstraints(maxHeight: 48.v),
-              validator: (value) {
-                if (value == null ||
-                    (!isValidPassword(value, isRequired: true))) {
-                  return "err_msg_please_enter_valid_password".tr;
-                }
-                return null;
-              },
-              obscureText: true);
-        });
+    return CustomTextFormField(
+        controller: passwordController,
+        hintText: "Password",
+        textInputType: TextInputType.visiblePassword,
+        prefix: Container(
+            margin: EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
+            child: CustomImageView(
+                imagePath: ImageConstant.imgLocation,
+                height: 24.adaptSize,
+                width: 24.adaptSize)),
+        prefixConstraints: BoxConstraints(maxHeight: 48.v),
+        obscureText: true);
   }
 
   /// Section Widget
   Widget _buildPassword1(BuildContext context) {
-    return BlocSelector<SignupBloc, SignupState, TextEditingController?>(
-        selector: (state) => state.passwordController1,
-        builder: (context, passwordController1) {
-          return CustomTextFormField(
-              controller: passwordController1,
-              hintText: "lbl_password_again".tr,
-              textInputAction: TextInputAction.done,
-              textInputType: TextInputType.visiblePassword,
-              prefix: Container(
-                  margin: EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
-                  child: CustomImageView(
-                      imagePath: ImageConstant.imgLocation,
-                      height: 24.adaptSize,
-                      width: 24.adaptSize)),
-              prefixConstraints: BoxConstraints(maxHeight: 48.v),
-              validator: (value) {
-                if (value == null ||
-                    (!isValidPassword(value, isRequired: true))) {
-                  return "err_msg_please_enter_valid_password".tr;
-                }
-                return null;
-              },
-              obscureText: true);
-        });
+    return CustomTextFormField(
+        controller: passwordController1,
+        hintText: "Password Again",
+        textInputAction: TextInputAction.done,
+        textInputType: TextInputType.visiblePassword,
+        prefix: Container(
+            margin: EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
+            child: CustomImageView(
+                imagePath: ImageConstant.imgLocation,
+                height: 24.adaptSize,
+                width: 24.adaptSize)),
+        prefixConstraints: BoxConstraints(maxHeight: 48.v),
+        obscureText: true);
   }
 
   /// Section Widget
   Widget _buildSignUp(BuildContext context) {
     return CustomElevatedButton(
-        text: "lbl_sign_up".tr,
+        text: "Sign Up",
         buttonStyle: CustomButtonStyles.fillPrimary,
         buttonTextStyle: CustomTextStyles.titleSmallTeal300);
   }
 
   /// Navigates to the loginScreen when the action is triggered.
   onTapTxtHaveanaccount(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.loginScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.loginScreen);
   }
 }

@@ -1,5 +1,3 @@
-import 'bloc/book_an_appointment_bloc.dart';
-import 'models/book_an_appointment_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/appbar_leading_image.dart';
@@ -12,43 +10,31 @@ import 'package:ryadalhdyfy7_s_application1/widgets/custom_icon_button.dart';
 class BookAnAppointmentScreen extends StatelessWidget {
   const BookAnAppointmentScreen({Key? key}) : super(key: key);
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<BookAnAppointmentBloc>(
-        create: (context) => BookAnAppointmentBloc(BookAnAppointmentState(
-            bookAnAppointmentModelObj: BookAnAppointmentModel()))
-          ..add(BookAnAppointmentInitialEvent()),
-        child: BookAnAppointmentScreen());
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BookAnAppointmentBloc, BookAnAppointmentState>(
-        builder: (context, state) {
-      return SafeArea(
-          child: Scaffold(
-              appBar: _buildAppBar(context),
-              body: Container(
-                  width: double.maxFinite,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.h, vertical: 24.v),
-                  child: Column(children: [
-                    _buildDoctorDetails(context),
-                    SizedBox(height: 19.v),
-                    _buildDate(context),
-                    SizedBox(height: 29.v),
-                    _buildReason(context),
-                    SizedBox(height: 13.v),
-                    Divider(),
-                    SizedBox(height: 18.v),
-                    _buildPaymentDetails(context),
-                    SizedBox(height: 12.v),
-                    Divider(),
-                    SizedBox(height: 18.v),
-                    _buildPaymentMethod(context),
-                    SizedBox(height: 5.v)
-                  ])),
-              bottomNavigationBar: _buildPrice(context)));
-    });
+    return SafeArea(
+        child: Scaffold(
+            appBar: _buildAppBar(context),
+            body: Container(
+                width: double.maxFinite,
+                padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 24.v),
+                child: Column(children: [
+                  _buildDoctorDetails(context),
+                  SizedBox(height: 19.v),
+                  _buildDate(context),
+                  SizedBox(height: 29.v),
+                  _buildReason(context),
+                  SizedBox(height: 13.v),
+                  Divider(),
+                  SizedBox(height: 18.v),
+                  _buildPaymentDetails(context),
+                  SizedBox(height: 12.v),
+                  Divider(),
+                  SizedBox(height: 18.v),
+                  _buildPaymentMethod(context),
+                  SizedBox(height: 5.v)
+                ])),
+            bottomNavigationBar: _buildPrice(context)));
   }
 
   /// Section Widget
@@ -62,7 +48,7 @@ class BookAnAppointmentScreen extends StatelessWidget {
               onTapArrowLeft(context);
             }),
         centerTitle: true,
-        title: AppbarSubtitle(text: "lbl_appointment".tr),
+        title: AppbarSubtitle(text: "Appointment"),
         actions: [
           AppbarTrailingImage(
               imagePath: ImageConstant.imgNotification,
@@ -87,11 +73,10 @@ class BookAnAppointmentScreen extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("msg_dr_marcus_horizon".tr,
+                    Text("Dr. Marcus Horizon",
                         style: CustomTextStyles.titleMedium18),
                     SizedBox(height: 7.v),
-                    Text("lbl_chardiologist".tr,
-                        style: theme.textTheme.labelLarge),
+                    Text("Chardiologist", style: theme.textTheme.labelLarge),
                     SizedBox(height: 13.v),
                     Padding(
                         padding: EdgeInsets.only(left: 3.h),
@@ -103,7 +88,7 @@ class BookAnAppointmentScreen extends StatelessWidget {
                               margin: EdgeInsets.only(bottom: 1.v)),
                           Padding(
                               padding: EdgeInsets.only(left: 4.h),
-                              child: Text("lbl_4_72".tr,
+                              child: Text("4.7",
                                   style: CustomTextStyles.labelLargeCyan300))
                         ])),
                     SizedBox(height: 10.v),
@@ -115,7 +100,7 @@ class BookAnAppointmentScreen extends StatelessWidget {
                           margin: EdgeInsets.only(bottom: 2.v)),
                       Padding(
                           padding: EdgeInsets.only(left: 3.h),
-                          child: Text("lbl_800m_away".tr,
+                          child: Text("800m away",
                               style: theme.textTheme.labelLarge))
                     ])
                   ]))
@@ -129,10 +114,10 @@ class BookAnAppointmentScreen extends StatelessWidget {
           padding: EdgeInsets.only(left: 1.h),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("lbl_date".tr, style: theme.textTheme.titleMedium),
+            Text("Date", style: theme.textTheme.titleMedium),
             Padding(
                 padding: EdgeInsets.symmetric(vertical: 2.v),
-                child: Text("lbl_change".tr, style: theme.textTheme.bodySmall))
+                child: Text("Change", style: theme.textTheme.bodySmall))
           ])),
       SizedBox(height: 6.v),
       Padding(
@@ -147,7 +132,7 @@ class BookAnAppointmentScreen extends StatelessWidget {
                     imagePath: ImageConstant.imgCalendarCyan300)),
             Padding(
                 padding: EdgeInsets.only(left: 15.h, top: 11.v, bottom: 7.v),
-                child: Text("msg_wednesday_jun_23".tr,
+                child: Text("Wednesday, Jun 23, 2021 | 10:00 AM",
                     style: theme.textTheme.titleSmall))
           ]))
     ]);
@@ -156,8 +141,7 @@ class BookAnAppointmentScreen extends StatelessWidget {
   /// Section Widget
   Widget _buildReason(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      _buildConsultation(context,
-          consultation: "lbl_reason".tr, price: "lbl_change".tr),
+      _buildConsultation(context, consultation: "Reason", price: "Change"),
       SizedBox(height: 6.v),
       Row(children: [
         CustomIconButton(
@@ -168,7 +152,7 @@ class BookAnAppointmentScreen extends StatelessWidget {
             child: CustomImageView(imagePath: ImageConstant.imgEditIcon)),
         Padding(
             padding: EdgeInsets.only(left: 15.h, top: 13.v, bottom: 5.v),
-            child: Text("lbl_chest_pain".tr, style: theme.textTheme.titleSmall))
+            child: Text("Chest pain", style: theme.textTheme.titleSmall))
       ])
     ]);
   }
@@ -178,30 +162,25 @@ class BookAnAppointmentScreen extends StatelessWidget {
     return Column(children: [
       Align(
           alignment: Alignment.centerLeft,
-          child: Text("lbl_payment_detail".tr,
-              style: theme.textTheme.titleMedium)),
+          child: Text("Payment Detail", style: theme.textTheme.titleMedium)),
       SizedBox(height: 12.v),
-      _buildConsultation(context,
-          consultation: "lbl_consultation".tr, price: "lbl_60_00".tr),
+      _buildConsultation(context, consultation: "Consultation", price: "60.00"),
+      SizedBox(height: 11.v),
+      _buildConsultation(context, consultation: "Admin Fee", price: "01.00"),
       SizedBox(height: 11.v),
       _buildConsultation(context,
-          consultation: "lbl_admin_fee".tr, price: "lbl_01_00".tr),
+          consultation: "Aditional Discount", price: "-"),
       SizedBox(height: 11.v),
-      _buildConsultation(context,
-          consultation: "msg_aditional_discount".tr, price: "lbl".tr),
-      SizedBox(height: 11.v),
-      _buildConsultation(context,
-          consultation: "lbl_total".tr, price: "lbl_61_00".tr)
+      _buildConsultation(context, consultation: "Total", price: "61.00")
     ]);
   }
 
   /// Section Widget
   Widget _buildPaymentMethod(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text("lbl_payment_method".tr, style: theme.textTheme.titleMedium),
+      Text("Payment Method", style: theme.textTheme.titleMedium),
       SizedBox(height: 10.v),
-      _buildConsultation(context,
-          consultation: "lbl_visa".tr, price: "lbl_change".tr)
+      _buildConsultation(context, consultation: "VISA", price: "Change")
     ]);
   }
 
@@ -219,14 +198,14 @@ class BookAnAppointmentScreen extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("lbl_total".tr,
+                        Text("Total",
                             style: CustomTextStyles.titleSmallGray500),
                         Padding(
                             padding: EdgeInsets.only(top: 1.v),
-                            child: Text("lbl_61_002".tr,
+                            child: Text(" 61.00",
                                 style: CustomTextStyles.titleMedium18))
                       ])),
-              CustomElevatedButton(width: 192.h, text: "lbl_booking".tr)
+              CustomElevatedButton(width: 192.h, text: "Booking")
             ]));
   }
 
@@ -246,8 +225,8 @@ class BookAnAppointmentScreen extends StatelessWidget {
     ]);
   }
 
-  /// Navigates to the previous screen.
+  /// Navigates back to the previous screen.
   onTapArrowLeft(BuildContext context) {
-    NavigatorService.goBack();
+    Navigator.pop(context);
   }
 }

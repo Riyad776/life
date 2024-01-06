@@ -1,19 +1,15 @@
-import '../models/fortyseven_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_icon_button.dart';
 
 // ignore: must_be_immutable
 class FortysevenItemWidget extends StatelessWidget {
-  FortysevenItemWidget(
-    this.fortysevenItemModelObj, {
+  FortysevenItemWidget({
     Key? key,
     this.onTapBtnTicket,
   }) : super(
           key: key,
         );
-
-  FortysevenItemModel fortysevenItemModelObj;
 
   VoidCallback? onTapBtnTicket;
 
@@ -30,7 +26,7 @@ class FortysevenItemWidget extends StatelessWidget {
           onTapBtnTicket!.call();
         },
         child: CustomImageView(
-          imagePath: fortysevenItemModelObj?.ticket,
+          imagePath: ImageConstant.imgTicket,
         ),
       ),
     );

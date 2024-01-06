@@ -1,18 +1,13 @@
-import '../models/drugs2_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_icon_button.dart';
 
 // ignore: must_be_immutable
 class Drugs2ItemWidget extends StatelessWidget {
-  Drugs2ItemWidget(
-    this.drugs2ItemModelObj, {
-    Key? key,
-  }) : super(
+  const Drugs2ItemWidget({Key? key})
+      : super(
           key: key,
         );
-
-  Drugs2ItemModel drugs2ItemModelObj;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +20,7 @@ class Drugs2ItemWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           CustomImageView(
-            imagePath: drugs2ItemModelObj?.oBHCombi,
+            imagePath: ImageConstant.imgDrugThumbnail72x72,
             height: 72.adaptSize,
             width: 72.adaptSize,
             radius: BorderRadius.circular(
@@ -49,12 +44,12 @@ class Drugs2ItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  drugs2ItemModelObj.oBHCombi1!,
+                  "OBH Combi",
                   style: CustomTextStyles.titleMedium18,
                 ),
                 SizedBox(height: 2.v),
                 Text(
-                  drugs2ItemModelObj.measurement!,
+                  "75ml",
                   style: theme.textTheme.labelLarge,
                 ),
                 SizedBox(height: 25.v),
@@ -69,7 +64,7 @@ class Drugs2ItemWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 10.h),
                       child: Text(
-                        drugs2ItemModelObj.counter!,
+                        "1",
                         style: theme.textTheme.titleMedium,
                       ),
                     ),
@@ -107,7 +102,7 @@ class Drugs2ItemWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 47.v),
                 Text(
-                  drugs2ItemModelObj.price!,
+                  "9.99",
                   style: CustomTextStyles.titleMedium18,
                 ),
               ],

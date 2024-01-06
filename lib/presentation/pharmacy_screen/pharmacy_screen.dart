@@ -1,9 +1,5 @@
 import '../pharmacy_screen/widgets/drugs1_item_widget.dart';
 import '../pharmacy_screen/widgets/drugs_item_widget.dart';
-import 'bloc/pharmacy_bloc.dart';
-import 'models/drugs1_item_model.dart';
-import 'models/drugs_item_model.dart';
-import 'models/pharmacy_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/appbar_leading_image.dart';
@@ -13,16 +9,11 @@ import 'package:ryadalhdyfy7_s_application1/widgets/app_bar/custom_app_bar.dart'
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_elevated_button.dart';
 import 'package:ryadalhdyfy7_s_application1/widgets/custom_search_view.dart';
 
+// ignore_for_file: must_be_immutable
 class PharmacyScreen extends StatelessWidget {
-  const PharmacyScreen({Key? key}) : super(key: key);
+  PharmacyScreen({Key? key}) : super(key: key);
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<PharmacyBloc>(
-        create: (context) =>
-            PharmacyBloc(PharmacyState(pharmacyModelObj: PharmacyModel()))
-              ..add(PharmacyInitialEvent()),
-        child: PharmacyScreen());
-  }
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +27,9 @@ class PharmacyScreen extends StatelessWidget {
                 child: Column(children: [
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.h),
-                      child: BlocSelector<PharmacyBloc, PharmacyState,
-                              TextEditingController?>(
-                          selector: (state) => state.searchController,
-                          builder: (context, searchController) {
-                            return CustomSearchView(
-                                controller: searchController,
-                                hintText: "msg_search_drug_category".tr);
-                          })),
+                      child: CustomSearchView(
+                          controller: searchController,
+                          hintText: "Search drug, category")),
                   SizedBox(height: 25.v),
                   _buildOfferBanner(context),
                   SizedBox(height: 52.v),
@@ -65,7 +51,7 @@ class PharmacyScreen extends StatelessWidget {
               onTapArrowLeft(context);
             }),
         centerTitle: true,
-        title: AppbarSubtitle(text: "lbl_pharmacy".tr),
+        title: AppbarSubtitle(text: "Pharmacy"),
         actions: [
           AppbarTrailingImage(
               imagePath: ImageConstant.imgCart,
@@ -92,7 +78,7 @@ class PharmacyScreen extends StatelessWidget {
               SizedBox(height: 4.v),
               SizedBox(
                   width: 160.h,
-                  child: Text("msg_order_quickly_w".tr,
+                  child: Text("Order quickly with\nprescription",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: CustomTextStyles.titleMedium18
@@ -101,7 +87,7 @@ class PharmacyScreen extends StatelessWidget {
               CustomElevatedButton(
                   height: 26.v,
                   width: 155.h,
-                  text: "msg_upload_prescription".tr,
+                  text: "Upload Prescription",
                   buttonStyle: CustomButtonStyles.fillCyan,
                   buttonTextStyle: CustomTextStyles.labelLargePrimarySemiBold)
             ]));
@@ -118,30 +104,20 @@ class PharmacyScreen extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(left: 1.h, right: 20.h),
                   child: _buildProductOnSale(context,
-                      productOnSale: "lbl_popular_product".tr,
-                      seeAll: "lbl_see_all".tr)),
+                      productOnSale: "Popular Product", seeAll: "See all")),
               SizedBox(height: 23.v),
               SizedBox(
                   height: 165.v,
-                  child:
-                      BlocSelector<PharmacyBloc, PharmacyState, PharmacyModel?>(
-                          selector: (state) => state.pharmacyModelObj,
-                          builder: (context, pharmacyModelObj) {
-                            return ListView.separated(
-                                padding: EdgeInsets.only(left: 1.h),
-                                scrollDirection: Axis.horizontal,
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(width: 21.h);
-                                },
-                                itemCount:
-                                    pharmacyModelObj?.drugsItemList.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  DrugsItemModel model =
-                                      pharmacyModelObj?.drugsItemList[index] ??
-                                          DrugsItemModel();
-                                  return DrugsItemWidget(model);
-                                });
-                          }))
+                  child: ListView.separated(
+                      padding: EdgeInsets.only(left: 1.h),
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (context, index) {
+                        return SizedBox(width: 21.h);
+                      },
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        return DrugsItemWidget();
+                      }))
             ])));
   }
 
@@ -156,31 +132,20 @@ class PharmacyScreen extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(left: 1.h, right: 20.h),
                   child: _buildProductOnSale(context,
-                      productOnSale: "lbl_product_on_sale".tr,
-                      seeAll: "lbl_see_all".tr)),
+                      productOnSale: "Product on Sale", seeAll: "See all")),
               SizedBox(height: 11.v),
               SizedBox(
                   height: 165.v,
-                  child:
-                      BlocSelector<PharmacyBloc, PharmacyState, PharmacyModel?>(
-                          selector: (state) => state.pharmacyModelObj,
-                          builder: (context, pharmacyModelObj) {
-                            return ListView.separated(
-                                padding: EdgeInsets.only(left: 1.h),
-                                scrollDirection: Axis.horizontal,
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(width: 18.h);
-                                },
-                                itemCount:
-                                    pharmacyModelObj?.drugs1ItemList.length ??
-                                        0,
-                                itemBuilder: (context, index) {
-                                  Drugs1ItemModel model =
-                                      pharmacyModelObj?.drugs1ItemList[index] ??
-                                          Drugs1ItemModel();
-                                  return Drugs1ItemWidget(model);
-                                });
-                          }))
+                  child: ListView.separated(
+                      padding: EdgeInsets.only(left: 1.h),
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (context, index) {
+                        return SizedBox(width: 18.h);
+                      },
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        return Drugs1ItemWidget();
+                      }))
             ])));
   }
 
@@ -202,15 +167,13 @@ class PharmacyScreen extends StatelessWidget {
     ]);
   }
 
-  /// Navigates to the previous screen.
+  /// Navigates back to the previous screen.
   onTapArrowLeft(BuildContext context) {
-    NavigatorService.goBack();
+    Navigator.pop(context);
   }
 
   /// Navigates to the cartScreen when the action is triggered.
   onTapCart(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.cartScreen,
-    );
+    Navigator.pushNamed(context, AppRoutes.cartScreen);
   }
 }

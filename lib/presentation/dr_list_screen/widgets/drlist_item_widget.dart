@@ -1,17 +1,12 @@
-import '../models/drlist_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ryadalhdyfy7_s_application1/core/app_export.dart';
 
 // ignore: must_be_immutable
 class DrlistItemWidget extends StatelessWidget {
-  DrlistItemWidget(
-    this.drlistItemModelObj, {
-    Key? key,
-  }) : super(
+  const DrlistItemWidget({Key? key})
+      : super(
           key: key,
         );
-
-  DrlistItemModel drlistItemModelObj;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +21,7 @@ class DrlistItemWidget extends StatelessWidget {
       child: Row(
         children: [
           CustomImageView(
-            imagePath: drlistItemModelObj?.drMarcusHorizon,
+            imagePath: ImageConstant.imgProfilePic,
             height: 111.adaptSize,
             width: 111.adaptSize,
             radius: BorderRadius.circular(
@@ -43,12 +38,12 @@ class DrlistItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  drlistItemModelObj.title!,
+                  "Dr. Marcus Horizon",
                   style: CustomTextStyles.titleMedium18,
                 ),
                 SizedBox(height: 7.v),
                 Text(
-                  drlistItemModelObj.chardiologist!,
+                  "Chardiologist",
                   style: theme.textTheme.labelLarge,
                 ),
                 SizedBox(height: 13.v),
@@ -65,7 +60,7 @@ class DrlistItemWidget extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(left: 4.h),
                         child: Text(
-                          drlistItemModelObj.ratting!,
+                          "4.7",
                           style: CustomTextStyles.labelLargeCyan300,
                         ),
                       ),
@@ -84,7 +79,7 @@ class DrlistItemWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 3.h),
                       child: Text(
-                        drlistItemModelObj.distance!,
+                        "800m away",
                         style: theme.textTheme.labelLarge,
                       ),
                     ),
